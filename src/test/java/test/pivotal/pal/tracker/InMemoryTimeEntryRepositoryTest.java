@@ -14,12 +14,12 @@ public class InMemoryTimeEntryRepositoryTest {
     @Test
     public void create() throws Exception {
         InMemoryTimeEntryRepository repo = new InMemoryTimeEntryRepository();
-        TimeEntry createdTimeEntry = repo.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
+        TimeEntry createdTimeEntry = (TimeEntry) repo.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
 
         TimeEntry expected = new TimeEntry(1L, 123L, 456L, LocalDate.parse("2017-01-08"), 8);
         assertThat(createdTimeEntry).isEqualTo(expected);
 
-        TimeEntry readEntry = repo.find(createdTimeEntry.getId());
+        TimeEntry readEntry = (TimeEntry) repo.find(createdTimeEntry.getId());
         assertThat(readEntry).isEqualTo(expected);
     }
 
@@ -29,7 +29,7 @@ public class InMemoryTimeEntryRepositoryTest {
         repo.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
 
         TimeEntry expected = new TimeEntry(1L, 123L, 456L, LocalDate.parse("2017-01-08"), 8);
-        TimeEntry readEntry = repo.find(1L);
+        TimeEntry readEntry = (TimeEntry) repo.find(1L);
         assertThat(readEntry).isEqualTo(expected);
     }
 
@@ -49,9 +49,9 @@ public class InMemoryTimeEntryRepositoryTest {
     @Test
     public void update() throws Exception {
         InMemoryTimeEntryRepository repo = new InMemoryTimeEntryRepository();
-        TimeEntry created = repo.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
+        TimeEntry created = (TimeEntry) repo.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
 
-        TimeEntry updatedEntry = repo.update(
+        TimeEntry updatedEntry = (TimeEntry) repo.update(
                 created.getId(),
                 new TimeEntry(321L, 654L, LocalDate.parse("2017-01-09"), 5));
 
@@ -63,7 +63,7 @@ public class InMemoryTimeEntryRepositoryTest {
     @Test
     public void delete() throws Exception {
         InMemoryTimeEntryRepository repo = new InMemoryTimeEntryRepository();
-        TimeEntry created = repo.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
+        TimeEntry created = (TimeEntry) repo.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
 
         repo.delete(created.getId());
         assertThat(repo.list()).isEmpty();
